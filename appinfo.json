@@ -1,0 +1,71 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "justin.brlotte797@gmail.com",
+    "longName": "Zix Adventure",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/2.png",
+                "name": "IMAGE_2",
+                "type": "png"
+            },
+            {
+                "file": "images/1.png",
+                "name": "IMAGE_1",
+                "type": "png"
+            },
+            {
+                "file": "images/3.png",
+                "name": "IMAGE_3",
+                "type": "png"
+            },
+            {
+                "file": "images/No.png",
+                "name": "IMAGE_NO",
+                "type": "png"
+            },
+            {
+                "file": "images/Yes.png",
+                "name": "IMAGE_YES",
+                "type": "png"
+            },
+            {
+                "file": "images/sword.png",
+                "name": "IMAGE_SWORD",
+                "type": "png"
+            },
+            {
+                "file": "images/Knight copie.png",
+                "name": "IMAGE_KNIGHT",
+                "type": "png"
+            },
+            {
+                "file": "images/inventory.png",
+                "name": "IMAGE_INVENTORY",
+                "type": "png"
+            },
+            {
+                "file": "images/shop.png",
+                "menuIcon": true,
+                "name": "IMAGE_SHOP",
+                "type": "png"
+            },
+            {
+                "file": "images/quest.png",
+                "name": "IMAGE_QUEST",
+                "type": "png"
+            }
+        ]
+    },
+    "shortName": "Zix Adventure",
+    "uuid": "143f79fc-0b12-4c14-a719-0061cb32fbd4",
+    "versionCode": 1,
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}

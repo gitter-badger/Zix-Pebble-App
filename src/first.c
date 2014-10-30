@@ -1,7 +1,28 @@
 #include "first.h"
 #include "shop.h"
 #include "inventory.h"
-#include "quest.h"
+#include "quest.h" 
+
+#define atoa(x) #x
+#define ZIX_PKEY 217
+#define RATE_PKEY 222
+#define HEALT_PKEY 221
+#define MANA_PKEY 220
+#define FORCE_PKEY 219
+#define ARMURE_PKEY 218
+  
+static int zix = 0;
+static int rate = 1;
+static int healt = 100;
+static int mana = 100;
+static int force = 5;
+static int armure = 5;
+static char Tzix[6] = {"123456"};
+static char Trate[6] = {"123456"};
+static char Thealt[6] = {"123456"};
+static char Tmana[6] = {"123456"};
+static char Tforce[6] = {"123456"};
+static char Tarmure[6] = {"123456"};
 #include <pebble.h>
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
@@ -66,14 +87,14 @@ static void initialise_ui(void) {
   layer_add_child(window_get_root_layer(s_window), (Layer *)rate_layer);
   
   // var_rate_layer
-  var_rate_layer = text_layer_create(GRect(42, 108, 81, 17));
-  text_layer_set_text(var_rate_layer, "var-rate");
+  var_rate_layer = text_layer_create(GRect(42, 109, 81, 17));
+  text_layer_set_text(var_rate_layer, "");
   text_layer_set_font(var_rate_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_rate_layer);
   
   // var_zix_layer
-  var_zix_layer = text_layer_create(GRect(32, 125, 89, 17));
-  text_layer_set_text(var_zix_layer, "var-zix");
+  var_zix_layer = text_layer_create(GRect(32, 126, 89, 17));
+  text_layer_set_text(var_zix_layer, "");
   text_layer_set_font(var_zix_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_zix_layer);
   
@@ -89,13 +110,13 @@ static void initialise_ui(void) {
   
   // var_healt_layer
   var_healt_layer = text_layer_create(GRect(99, 10, 24, 15));
-  text_layer_set_text(var_healt_layer, "100");
+  text_layer_set_text(var_healt_layer, "");
   text_layer_set_font(var_healt_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_healt_layer);
   
   // var_mana_layer
   var_mana_layer = text_layer_create(GRect(99, 27, 22, 15));
-  text_layer_set_text(var_mana_layer, "100");
+  text_layer_set_text(var_mana_layer, "");
   text_layer_set_font(var_mana_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_mana_layer);
   
@@ -111,13 +132,13 @@ static void initialise_ui(void) {
   
   // var_force_layer
   var_force_layer = text_layer_create(GRect(95, 79, 16, 15));
-  text_layer_set_text(var_force_layer, "20");
+  text_layer_set_text(var_force_layer, "");
   text_layer_set_font(var_force_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_force_layer);
   
   // var_armure_layer
   var_armure_layer = text_layer_create(GRect(95, 93, 16, 14));
-  text_layer_set_text(var_armure_layer, "20");
+  text_layer_set_text(var_armure_layer, "");
   text_layer_set_font(var_armure_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_armure_layer);
 }
@@ -145,6 +166,71 @@ static void destroy_ui(void) {
 }
 // END AUTO-GENERATED UI CODE
 
+void handle_timechange(struct tm *tick_time, TimeUnits units_changed){
+      zix += rate;
+  //Zix
+      snprintf(Tzix, sizeof(Tzix), "%d", zix);
+      text_layer_set_text(var_zix_layer, Tzix); 
+}
+static void Frate(){
+  //RATE
+    snprintf(Trate, sizeof(Trate), "%d", rate);
+    text_layer_set_text(var_rate_layer, Trate);
+}
+static void Fhealt(){
+  //Healt
+    snprintf(Thealt, sizeof(Thealt), "%d", healt);
+    text_layer_set_text(var_healt_layer, Thealt);
+}
+static void Fmana(){
+    //Mana
+    snprintf(Tmana, sizeof(Tmana), "%d", mana);
+    text_layer_set_text(var_mana_layer, Tmana);
+}
+static void Fforce(){
+    //Force
+    snprintf(Tforce, sizeof(Tforce), "%d", force);
+    text_layer_set_text(var_force_layer, Tforce);
+}
+static void Farmure(){
+    //Armure 
+    snprintf(Tarmure, sizeof(Tarmure), "%d", armure);
+    text_layer_set_text(var_armure_layer, Tarmure);
+}
+static void modif(){
+    tick_timer_service_subscribe(SECOND_UNIT, handle_timechange);
+  
+    if(persist_exists(ZIX_PKEY)){
+	  zix = persist_read_int(ZIX_PKEY);
+    }else{
+	  zix = 0;
+    }
+    if(persist_exists(RATE_PKEY)){
+	  rate = persist_read_int(RATE_PKEY);
+    }else{
+	  rate = 1;
+    }
+    if(persist_exists(HEALT_PKEY)){
+	  healt = persist_read_int(HEALT_PKEY);
+    }else{
+	  healt = 100;
+    }
+    if(persist_exists(MANA_PKEY)){
+	  mana = persist_read_int(MANA_PKEY);
+    }else{
+	  mana = 100;
+    }
+    if(persist_exists(FORCE_PKEY)){
+	  force = persist_read_int(FORCE_PKEY);
+    }else{
+	  force = 5;
+    }
+    if(persist_exists(ARMURE_PKEY)){
+	  armure = persist_read_int(ARMURE_PKEY);
+    }else{
+	  armure = 5;
+    }
+}
 
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
   show_shop();
@@ -166,10 +252,25 @@ static void click_config_provider(void *context) {
 
 static void handle_window_unload(Window* window) {
   destroy_ui();
+  persist_write_int(ZIX_PKEY, zix);
+  persist_write_int(RATE_PKEY, rate);
+  persist_write_int(HEALT_PKEY, healt);
+  persist_write_int(MANA_PKEY, mana);
+  persist_write_int(FORCE_PKEY, force);
+  persist_write_int(ARMURE_PKEY, armure);
 }
 
+static void changevalue(){
+  Frate();
+  Fhealt();
+  Fmana();
+  Fforce();
+  Farmure();
+}
 void show_first(void) {
   initialise_ui();
+  modif();
+  changevalue();
   window_set_click_config_provider(s_window, click_config_provider);
   window_set_window_handlers(s_window, (WindowHandlers) {
     .unload = handle_window_unload,

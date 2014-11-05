@@ -82,19 +82,17 @@ static void initialise_ui(void) {
   
   // rate_layer
   rate_layer = text_layer_create(GRect(2, 105, 39, 20));
-  text_layer_set_text(rate_layer, "Rate :");
+  text_layer_set_text(rate_layer, "Honor :");
   text_layer_set_font(rate_layer, s_res_gothic_18_bold);
   layer_add_child(window_get_root_layer(s_window), (Layer *)rate_layer);
   
   // var_rate_layer
   var_rate_layer = text_layer_create(GRect(42, 109, 81, 17));
-  text_layer_set_text(var_rate_layer, "");
   text_layer_set_font(var_rate_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_rate_layer);
   
   // var_zix_layer
   var_zix_layer = text_layer_create(GRect(32, 126, 89, 17));
-  text_layer_set_text(var_zix_layer, "");
   text_layer_set_font(var_zix_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_zix_layer);
   
@@ -110,13 +108,11 @@ static void initialise_ui(void) {
   
   // var_healt_layer
   var_healt_layer = text_layer_create(GRect(99, 10, 24, 15));
-  text_layer_set_text(var_healt_layer, "");
   text_layer_set_font(var_healt_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_healt_layer);
   
   // var_mana_layer
   var_mana_layer = text_layer_create(GRect(99, 27, 22, 15));
-  text_layer_set_text(var_mana_layer, "");
   text_layer_set_font(var_mana_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_mana_layer);
   
@@ -132,13 +128,11 @@ static void initialise_ui(void) {
   
   // var_force_layer
   var_force_layer = text_layer_create(GRect(95, 79, 16, 15));
-  text_layer_set_text(var_force_layer, "");
   text_layer_set_font(var_force_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_force_layer);
   
   // var_armure_layer
   var_armure_layer = text_layer_create(GRect(95, 93, 16, 14));
-  text_layer_set_text(var_armure_layer, "");
   text_layer_set_font(var_armure_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_armure_layer);
 }

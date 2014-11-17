@@ -24,9 +24,13 @@ static void destroy_ui(void) {
 static void handle_window_unload(Window* window) {
   destroy_ui();
 }
+static void modif(int nb, short bonus){
+  
+}
 
-void show_battle(void) {
+void show_battle(int nb, short bonus) {
   initialise_ui();
+  modif(nb, bonus);
   window_set_window_handlers(s_window, (WindowHandlers) {
     .unload = handle_window_unload,
   });

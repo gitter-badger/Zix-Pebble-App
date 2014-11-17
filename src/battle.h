@@ -1,2 +1,2 @@
-void show_battle(void);
+void show_battle(int nb, short bonus);
 void hide_battle(void);

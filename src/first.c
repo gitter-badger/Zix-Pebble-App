@@ -23,6 +23,7 @@ static char Thealt[6] = {"123456"};
 static char Tmana[6] = {"123456"};
 static char Tforce[6] = {"123456"};
 static char Tarmure[6] = {"123456"};
+
 #include <pebble.h>
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
@@ -37,8 +38,6 @@ static BitmapLayer *var_perso;
 static TextLayer *zix_layer;
 static ActionBarLayer *menu_bar;
 static TextLayer *rate_layer;
-static TextLayer *var_rate_layer;
-static TextLayer *var_zix_layer;
 static TextLayer *healt_layer;
 static TextLayer *mana_layer;
 static TextLayer *var_healt_layer;
@@ -47,6 +46,8 @@ static TextLayer *force_layer;
 static TextLayer *armure_layer;
 static TextLayer *var_force_layer;
 static TextLayer *var_armure_layer;
+static TextLayer *var_rate_layer;
+static TextLayer *var_zix_layer;
 
 static void initialise_ui(void) {
   s_window = window_create();
@@ -81,20 +82,10 @@ static void initialise_ui(void) {
   layer_add_child(window_get_root_layer(s_window), (Layer *)menu_bar);
   
   // rate_layer
-  rate_layer = text_layer_create(GRect(2, 105, 39, 20));
+  rate_layer = text_layer_create(GRect(2, 105, 47, 20));
   text_layer_set_text(rate_layer, "Honor :");
   text_layer_set_font(rate_layer, s_res_gothic_18_bold);
   layer_add_child(window_get_root_layer(s_window), (Layer *)rate_layer);
-  
-  // var_rate_layer
-  var_rate_layer = text_layer_create(GRect(42, 109, 81, 17));
-  text_layer_set_font(var_rate_layer, s_res_gothic_14);
-  layer_add_child(window_get_root_layer(s_window), (Layer *)var_rate_layer);
-  
-  // var_zix_layer
-  var_zix_layer = text_layer_create(GRect(32, 126, 89, 17));
-  text_layer_set_font(var_zix_layer, s_res_gothic_14);
-  layer_add_child(window_get_root_layer(s_window), (Layer *)var_zix_layer);
   
   // healt_layer
   healt_layer = text_layer_create(GRect(59, 10, 40, 16));
@@ -108,11 +99,13 @@ static void initialise_ui(void) {
   
   // var_healt_layer
   var_healt_layer = text_layer_create(GRect(99, 10, 24, 15));
+  text_layer_set_text(var_healt_layer, "0");
   text_layer_set_font(var_healt_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_healt_layer);
   
   // var_mana_layer
   var_mana_layer = text_layer_create(GRect(99, 27, 22, 15));
+  text_layer_set_text(var_mana_layer, "0");
   text_layer_set_font(var_mana_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_mana_layer);
   
@@ -128,13 +121,29 @@ static void initialise_ui(void) {
   
   // var_force_layer
   var_force_layer = text_layer_create(GRect(95, 79, 16, 15));
+  text_layer_set_text(var_force_layer, "0");
   text_layer_set_font(var_force_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_force_layer);
   
   // var_armure_layer
   var_armure_layer = text_layer_create(GRect(95, 93, 16, 14));
+  text_layer_set_text(var_armure_layer, "0");
   text_layer_set_font(var_armure_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_armure_layer);
+  
+  // var_rate_layer
+  var_rate_layer = text_layer_create(GRect(48, 108, 78, 19));
+  text_layer_set_background_color(var_rate_layer, GColorClear);
+  text_layer_set_text(var_rate_layer, "0");
+  text_layer_set_font(var_rate_layer, s_res_gothic_14);
+  layer_add_child(window_get_root_layer(s_window), (Layer *)var_rate_layer);
+  
+  // var_zix_layer
+  var_zix_layer = text_layer_create(GRect(31, 125, 115, 19));
+  text_layer_set_background_color(var_zix_layer, GColorClear);
+  text_layer_set_text(var_zix_layer, "0");
+  text_layer_set_font(var_zix_layer, s_res_gothic_14);
+  layer_add_child(window_get_root_layer(s_window), (Layer *)var_zix_layer);
 }
 
 static void destroy_ui(void) {
@@ -143,8 +152,6 @@ static void destroy_ui(void) {
   text_layer_destroy(zix_layer);
   action_bar_layer_destroy(menu_bar);
   text_layer_destroy(rate_layer);
-  text_layer_destroy(var_rate_layer);
-  text_layer_destroy(var_zix_layer);
   text_layer_destroy(healt_layer);
   text_layer_destroy(mana_layer);
   text_layer_destroy(var_healt_layer);
@@ -153,6 +160,8 @@ static void destroy_ui(void) {
   text_layer_destroy(armure_layer);
   text_layer_destroy(var_force_layer);
   text_layer_destroy(var_armure_layer);
+  text_layer_destroy(var_rate_layer);
+  text_layer_destroy(var_zix_layer);
   gbitmap_destroy(s_res_image_knight);
   gbitmap_destroy(s_res_image_inventory);
   gbitmap_destroy(s_res_image_shop);
@@ -262,6 +271,7 @@ static void changevalue(){
   Farmure();
 }
 void show_first(void) {
+  srand(time(NULL));
   initialise_ui();
   modif();
   changevalue();

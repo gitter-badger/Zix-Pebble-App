@@ -1,4 +1,5 @@
 #include "battle.h"
+#include "first.h"
 #include <pebble.h>
   
 #define ZIX_PKEY 217
@@ -39,14 +40,14 @@ static TextLayer *force_enemy_layer;
 static TextLayer *var_force_enemy_layer;
 static TextLayer *armure_enemy_layer;
 static TextLayer *var_armure_enemy_layer;
-static InverterLayer *s_inverterlayer_1;
+static TextLayer *inventory_layer;
 static TextLayer *health_me_layer;
 static TextLayer *var_health_me_layer;
 static TextLayer *mana_me_layer;
 static TextLayer *s_textlayer_1;
 static TextLayer *spell_layer;
 static TextLayer *s_textlayer_2;
-static TextLayer *inventory_layer;
+static InverterLayer *s_inverterlayer_1;
 
 static void initialise_ui(void) {
   s_window = window_create();
@@ -75,68 +76,70 @@ static void initialise_ui(void) {
   layer_add_child(window_get_root_layer(s_window), (Layer *)enemy_layer);
   
   // health_enemie_layer
-  health_enemie_layer = text_layer_create(GRect(5, 24, 49, 17));
+  health_enemie_layer = text_layer_create(GRect(5, 24, 57, 17));
   text_layer_set_text(health_enemie_layer, "Health :");
   layer_add_child(window_get_root_layer(s_window), (Layer *)health_enemie_layer);
   
   // var_health_enemie_layer
-  var_health_enemie_layer = text_layer_create(GRect(46, 25, 75, 17));
+  var_health_enemie_layer = text_layer_create(GRect(51, 25, 75, 17));
   text_layer_set_background_color(var_health_enemie_layer, GColorClear);
   text_layer_set_text(var_health_enemie_layer, "0");
   text_layer_set_font(var_health_enemie_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_health_enemie_layer);
   
   // force_enemy_layer
-  force_enemy_layer = text_layer_create(GRect(5, 41, 47, 19));
+  force_enemy_layer = text_layer_create(GRect(5, 41, 51, 19));
   text_layer_set_background_color(force_enemy_layer, GColorClear);
   text_layer_set_text(force_enemy_layer, "Force :");
   layer_add_child(window_get_root_layer(s_window), (Layer *)force_enemy_layer);
   
   // var_force_enemy_layer
-  var_force_enemy_layer = text_layer_create(GRect(42, 42, 80, 17));
+  var_force_enemy_layer = text_layer_create(GRect(47, 42, 80, 17));
   text_layer_set_background_color(var_force_enemy_layer, GColorClear);
   text_layer_set_text(var_force_enemy_layer, "0");
   text_layer_set_font(var_force_enemy_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_force_enemy_layer);
   
   // armure_enemy_layer
-  armure_enemy_layer = text_layer_create(GRect(4, 57, 49, 18));
+  armure_enemy_layer = text_layer_create(GRect(4, 57, 59, 18));
   text_layer_set_background_color(armure_enemy_layer, GColorClear);
   text_layer_set_text(armure_enemy_layer, "Armure : ");
   layer_add_child(window_get_root_layer(s_window), (Layer *)armure_enemy_layer);
   
   // var_armure_enemy_layer
-  var_armure_enemy_layer = text_layer_create(GRect(50, 57, 100, 20));
+  var_armure_enemy_layer = text_layer_create(GRect(55, 57, 100, 18));
   text_layer_set_background_color(var_armure_enemy_layer, GColorClear);
   text_layer_set_text(var_armure_enemy_layer, "0");
   text_layer_set_font(var_armure_enemy_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_armure_enemy_layer);
   
-  // s_inverterlayer_1
-  s_inverterlayer_1 = inverter_layer_create(GRect(2, 3, 119, 73));
-  layer_add_child(window_get_root_layer(s_window), (Layer *)s_inverterlayer_1);
+  // inventory_layer
+  inventory_layer = text_layer_create(GRect(3, 107, 100, 20));
+  text_layer_set_background_color(inventory_layer, GColorClear);
+  text_layer_set_text(inventory_layer, "3.Inventory");
+  layer_add_child(window_get_root_layer(s_window), (Layer *)inventory_layer);
   
   // health_me_layer
-  health_me_layer = text_layer_create(GRect(2, 137, 62, 20));
+  health_me_layer = text_layer_create(GRect(2, 137, 86, 20));
   text_layer_set_background_color(health_me_layer, GColorClear);
   text_layer_set_text(health_me_layer, "Her Health :");
   layer_add_child(window_get_root_layer(s_window), (Layer *)health_me_layer);
   
   // var_health_me_layer
-  var_health_me_layer = text_layer_create(GRect(62, 138, 60, 18));
+  var_health_me_layer = text_layer_create(GRect(73, 137, 60, 20));
   text_layer_set_background_color(var_health_me_layer, GColorClear);
   text_layer_set_text(var_health_me_layer, "0");
   text_layer_set_font(var_health_me_layer, s_res_gothic_14);
   layer_add_child(window_get_root_layer(s_window), (Layer *)var_health_me_layer);
   
   // mana_me_layer
-  mana_me_layer = text_layer_create(GRect(2, 125, 58, 20));
+  mana_me_layer = text_layer_create(GRect(2, 125, 76, 16));
   text_layer_set_background_color(mana_me_layer, GColorClear);
   text_layer_set_text(mana_me_layer, "Her Mana :");
   layer_add_child(window_get_root_layer(s_window), (Layer *)mana_me_layer);
   
   // s_textlayer_1
-  s_textlayer_1 = text_layer_create(GRect(57, 126, 63, 15));
+  s_textlayer_1 = text_layer_create(GRect(65, 126, 63, 15));
   text_layer_set_background_color(s_textlayer_1, GColorClear);
   text_layer_set_text(s_textlayer_1, "0");
   text_layer_set_font(s_textlayer_1, s_res_gothic_14);
@@ -154,11 +157,9 @@ static void initialise_ui(void) {
   text_layer_set_text(s_textlayer_2, "2.Attack");
   layer_add_child(window_get_root_layer(s_window), (Layer *)s_textlayer_2);
   
-  // inventory_layer
-  inventory_layer = text_layer_create(GRect(3, 107, 100, 20));
-  text_layer_set_background_color(inventory_layer, GColorClear);
-  text_layer_set_text(inventory_layer, "3.Inventory");
-  layer_add_child(window_get_root_layer(s_window), (Layer *)inventory_layer);
+  // s_inverterlayer_1
+  s_inverterlayer_1 = inverter_layer_create(GRect(3, 4, 119, 73));
+  layer_add_child(window_get_root_layer(s_window), (Layer *)s_inverterlayer_1);
 }
 
 static void destroy_ui(void) {
@@ -171,14 +172,14 @@ static void destroy_ui(void) {
   text_layer_destroy(var_force_enemy_layer);
   text_layer_destroy(armure_enemy_layer);
   text_layer_destroy(var_armure_enemy_layer);
-  inverter_layer_destroy(s_inverterlayer_1);
+  text_layer_destroy(inventory_layer);
   text_layer_destroy(health_me_layer);
   text_layer_destroy(var_health_me_layer);
   text_layer_destroy(mana_me_layer);
   text_layer_destroy(s_textlayer_1);
   text_layer_destroy(spell_layer);
   text_layer_destroy(s_textlayer_2);
-  text_layer_destroy(inventory_layer);
+  inverter_layer_destroy(s_inverterlayer_1);
   gbitmap_destroy(s_res_image_1);
   gbitmap_destroy(s_res_image_2);
   gbitmap_destroy(s_res_image_3);
@@ -221,6 +222,33 @@ static void modif(int nb, short bonus){
   if(nb == 1 && test == true){
     
   }
+  if(nb == 2 && test == true){
+    
+  }
+  if(nb == 3 && test == true){
+    
+  }
+  if(nb == 4 && test == true){
+    
+  }
+  if(nb == 5 && test == true){
+    
+  }
+  if(nb == 6 && test == true){
+    
+  }
+  if(nb == 7 && test == true){
+    
+  }
+  if(nb == 8 && test == true){
+    
+  }
+  if(nb == 9 && test == true){
+    
+  }
+  if(nb == 10 && test == true){
+    
+  }
     Fhealt();
     Ffroce();
     Farmure();
@@ -257,7 +285,90 @@ static void var(){
 }
 //Attaque
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  switch (temp){
+   switch (temp){
+    case 0 :
+     //  if(mehealt <= 0 && enmeyhealt  <= 0){
+         //zix += 100;
+         //rate += 10;
+        // show_first();
+      // }else{ 
+        enmeyhealt -= 5-enmeyarmure;
+         mehealt -= 2;
+     // }
+      break;
+    case 1 :
+          
+      break;
+    case 2 :
+          
+      break;
+    case 3 :
+          
+      break;
+    case 4 :
+          
+      break;
+    case 5 :
+          
+      break;
+     case 6 :
+          
+      break;
+     case 7 :
+          
+      break;
+     case 8 :
+          
+      break;
+     case 9 :
+          
+      break;
+     case 10 :
+          
+      break;
+  }
+}
+//Spell
+static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
+     switch (temp){
+    case 0 :
+       
+      break;
+    case 1 :
+          
+      break;
+    case 2 :
+          
+      break;
+    case 3 :
+          
+      break;
+    case 4 :
+          
+      break;
+    case 5 :
+          
+      break;
+     case 6 :
+          
+      break;
+     case 7 :
+          
+      break;
+     case 8 :
+          
+      break;
+     case 9 :
+          
+      break;
+     case 10 :
+          
+      break;
+  }
+}
+//Inventory
+static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
+   switch (temp){
     case 0 :
          enmeyhealt -= 5-enmeyarmure;
          mehealt -= 2;
@@ -265,15 +376,34 @@ static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
     case 1 :
           
       break;
+    case 2 :
+          
+      break;
+    case 3 :
+          
+      break;
+    case 4 :
+          
+      break;
+    case 5 :
+          
+      break;
+     case 6 :
+          
+      break;
+     case 7 :
+          
+      break;
+     case 8 :
+          
+      break;
+     case 9 :
+          
+      break;
+     case 10 :
+          
+      break;
   }
-}
-
-static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
-  //2
-}
-
-static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-  //3
 }
 static void click_config_provider(void *context) {
   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);

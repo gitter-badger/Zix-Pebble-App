@@ -227,11 +227,11 @@ static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
   }
   if(RandomNb == 1){
   zix -=1000;
-  show_random();
+  show_random(RandomNb);
   }
   if(RandomNb == 2){  //Homme
   zix -=2000;
-  show_random();
+  show_random(RandomNb);
   }
   if(RandomNb == 3){  
   // Faire un randome combat de 5 ennemis
@@ -269,7 +269,8 @@ static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
       show_battle(RandomNb, 1); // Orge
     }
     if(RandomNb == 1){
-  }
+      RandomQuest();
+    }
   if(RandomNb == 2){
     text_layer_set_text(layer_1, "Je vous");
     text_layer_set_text(layer_2, "la fait");
@@ -294,10 +295,10 @@ static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
   if(RandomNb == 5){
     text_layer_set_text(layer_1, "Les bandits");
     text_layer_set_text(layer_2, "vous on volé");
-    text_layer_set_text(layer_3, "5 0000 zix!");
-    text_layer_set_text(layer_4, "");
+    text_layer_set_text(layer_3, "tout vos ");
+    text_layer_set_text(layer_4, "zix!");
     text_layer_set_text(layer_5, "");
-    zix -= 5000;
+    zix = 0;
   }
   if(RandomNb == 6){
     text_layer_set_text(layer_1, "L'homme vous");

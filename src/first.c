@@ -170,7 +170,7 @@ static void destroy_ui(void) {
 // END AUTO-GENERATED UI CODE
 
 void handle_timechange(struct tm *tick_time, TimeUnits units_changed){
-      zix += rate;
+      zix++;
   //Zix
       snprintf(Tzix, sizeof(Tzix), "%d", zix);
       text_layer_set_text(var_zix_layer, Tzix); 

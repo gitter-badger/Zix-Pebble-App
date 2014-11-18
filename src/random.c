@@ -18,7 +18,7 @@ static void handle_window_unload(Window* window) {
   destroy_ui();
 }
 
-void show_random(void) {
+void show_random(int nb) {
   initialise_ui();
   window_set_window_handlers(s_window, (WindowHandlers) {
     .unload = handle_window_unload,

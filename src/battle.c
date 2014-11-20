@@ -24,6 +24,12 @@ static char Tmemana[6] = {"123456"};
 
 static int temp = 0;
 static bool test = true;
+static bool dead = false;
+
+static short int zixwin = 0;
+static short int ratewin = 0;
+static short int zixfall = 0;
+static short int ratefall = 0;
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;
@@ -204,50 +210,59 @@ static void Farmure(){
 static void Fmehealt(){
     //mehealt
       snprintf(Tmehealt, sizeof(Tmehealt), "%d", mehealt);
-      text_layer_set_text(var_armure_enemy_layer, Tmehealt);
+      text_layer_set_text(var_health_me_layer, Tmehealt);
 }
 static void Fmemana(){
     //Armure
       snprintf(Tmemana, sizeof(Tmemana), "%d", memana);
-      text_layer_set_text(var_armure_enemy_layer, Tmemana);
+      text_layer_set_text(s_textlayer_1, Tmemana);
 }
 static void modif(int nb, short bonus){
-  if(nb == 0 && test == true){
-      text_layer_set_text(enemy_layer, " Orge ");
-      enmeyhealt = 75;
-      enmeyforce = 2;
-      enmeyarmure = 3;
-      temp = 0;
-  }
-  if(nb == 1 && test == true){
+  if(test){
+  mehealt = persist_read_int(HEALT_PKEY);
+  memana = persist_read_int(MANA_PKEY);
+    if(nb == 0 ){
+        text_layer_set_text(enemy_layer, " Orgue ");
+        enmeyhealt = 50;
+        enmeyforce = 2;
+        enmeyarmure = 3;
+        temp = 0;
+      
+        zixwin = 500;
+        zixfall = 250;
+        ratefall = 5;
+        ratewin = 10;
+    }
+  if(nb == 1){
     
   }
-  if(nb == 2 && test == true){
+  if(nb == 2){
     
   }
-  if(nb == 3 && test == true){
+  if(nb == 3){
     
   }
-  if(nb == 4 && test == true){
+  if(nb == 4){
     
   }
-  if(nb == 5 && test == true){
+  if(nb == 5){
     
   }
-  if(nb == 6 && test == true){
+  if(nb == 6){
     
   }
-  if(nb == 7 && test == true){
+  if(nb == 7){
     
   }
-  if(nb == 8 && test == true){
+  if(nb == 8){
     
   }
-  if(nb == 9 && test == true){
+  if(nb == 9){
     
   }
-  if(nb == 10 && test == true){
+  if(nb == 10){
     
+  }
   }
     Fhealt();
     Ffroce();
@@ -287,14 +302,18 @@ static void var(){
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
    switch (temp){
     case 0 :
-     //  if(mehealt <= 0 && enmeyhealt  <= 0){
-         //zix += 100;
-         //rate += 10;
-        // show_first();
-      // }else{ 
         enmeyhealt -= 5-enmeyarmure;
          mehealt -= 2;
-     // }
+         if(mehealt <= 0){
+        zix -= zixfall;
+        rate -= ratefall;
+        hide_battle();
+        }
+      if(enmeyhealt <= 1){
+      zix += zixwin;
+     rate += ratewin;
+      hide_battle();
+       }
       break;
     case 1 :
           
@@ -327,6 +346,8 @@ static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
           
       break;
   }
+      Fmehealt();
+      Fhealt();
 }
 //Spell
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
@@ -430,5 +451,10 @@ void show_battle(int nb, short bonus) {
 }
 
 void hide_battle(void) {
+  destroy_ui();
+  persist_write_int(ZIX_PKEY, zix);
+  persist_write_int(RATE_PKEY, rate);
+  persist_write_int(HEALT_PKEY, mehealt);
+  persist_write_int(MANA_PKEY, memana);
   window_stack_remove(s_window, true);
 }

@@ -3,26 +3,32 @@
 #include "inventory.h"
 #include "quest.h" 
 
-#define atoa(x) #x
 #define ZIX_PKEY 217
 #define RATE_PKEY 222
 #define HEALT_PKEY 221
 #define MANA_PKEY 220
 #define FORCE_PKEY 219
 #define ARMURE_PKEY 218
+#define SPELL_PKEY 223
+#define WEAPON_PKEY 224
+#define POTION_PKEY 225
   
 static int zix = 0;
 static int rate = 1;
 static int healt = 100;
 static int mana = 100;
 static int force = 5;
-static int armure = 5;
+static int armure = 0;
 static char Tzix[6] = {"123456"};
 static char Trate[6] = {"123456"};
 static char Thealt[6] = {"123456"};
 static char Tmana[6] = {"123456"};
 static char Tforce[6] = {"123456"};
 static char Tarmure[6] = {"123456"};
+
+static short int sell;
+static short int weapon;
+static short int potion;
 
 #include <pebble.h>
 
@@ -236,7 +242,10 @@ static void modif(){
 }
 
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  show_shop();
+  short int x = rand()%7;
+  short int y = rand()%10;
+  short int w = rand()%5;
+  show_shop(x, y, w);
 }
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
@@ -255,12 +264,6 @@ static void click_config_provider(void *context) {
 
 static void handle_window_unload(Window* window) {
   destroy_ui();
-  persist_write_int(ZIX_PKEY, zix);
-  persist_write_int(RATE_PKEY, rate);
-  persist_write_int(HEALT_PKEY, healt);
-  persist_write_int(MANA_PKEY, mana);
-  persist_write_int(FORCE_PKEY, force);
-  persist_write_int(ARMURE_PKEY, armure);
 }
 
 static void changevalue(){
@@ -284,5 +287,10 @@ void show_first(void) {
 }
 
 void hide_first(void) {
+  window_destroy(s_window);
+  persist_write_int(ZIX_PKEY, zix);
+  persist_write_int(RATE_PKEY, rate);
+  persist_write_int(HEALT_PKEY, healt);
+  persist_write_int(MANA_PKEY, mana);
   window_stack_remove(s_window, true);
 }

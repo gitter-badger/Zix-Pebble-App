@@ -1,5 +1,11 @@
 #include "shop.h"
 #include <pebble.h>
+  
+#define ZIX_PKEY 217
+#define RATE_PKEY 222
+  
+static int zix;
+static int rate;
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;
@@ -135,10 +141,150 @@ static void destroy_ui(void) {
 
 static void handle_window_unload(Window* window) {
   destroy_ui();
+  persist_write_int(ZIX_PKEY, zix);
+  persist_write_int(RATE_PKEY, rate);
 }
 
-void show_shop(void) {
+static void modif(){
+  
+    if(persist_exists(ZIX_PKEY)){
+	  zix = persist_read_int(ZIX_PKEY);
+    }else{
+	  zix = 0;
+    }
+    if(persist_exists(RATE_PKEY)){
+	  rate = persist_read_int(RATE_PKEY);
+    }else{
+	  rate = 1;
+    }
+}
+
+void Object(short int potion,short int armure, short int spell) {
+  //Potion
+    switch (potion){
+      case 0:
+          text_layer_set_text(name1_layer, "Life potion");
+          text_layer_set_text(description1_layer, "Give +10 healt (25 zix)");
+        break;
+      case 1:
+          text_layer_set_text(name1_layer, "Life potion");
+          text_layer_set_text(description1_layer, "Give +25 healt (50 zix)");
+        break;
+      case 2:
+          text_layer_set_text(name1_layer, "Life potion");
+          text_layer_set_text(description1_layer, "Give +50 healt (80 zix)");
+        break;
+      case 3:
+          text_layer_set_text(name1_layer, "Life potion");
+          text_layer_set_text(description1_layer, "Give +100 healt (150 zix)");
+        break;
+      case 4:
+          text_layer_set_text(name1_layer, "Mana potion");
+          text_layer_set_text(description1_layer, "Give +10 mana (25 zix)");
+        break;
+      case 5:
+          text_layer_set_text(name1_layer, "Mana potion");
+          text_layer_set_text(description1_layer, "Give +25 mana (50 zix)");
+        break;
+      case 6:
+          text_layer_set_text(name1_layer, "Mana potion");
+          text_layer_set_text(description1_layer, "Give +50 mana (80 zix)");
+        break;
+      case 7:
+          text_layer_set_text(name1_layer, "Mana potion");
+          text_layer_set_text(description1_layer, "Give +100 mana (150 zix)");
+        break;
+    default:
+          text_layer_set_text(name1_layer, "Noting for sell");
+          text_layer_set_text(description1_layer, "");
+        break;
+    }
+  
+  //Armrue
+    switch (armure){
+      case 0:
+          text_layer_set_text(name2_layer, "Leather armor");
+          text_layer_set_text(description2_layer, "Give +2 Armure (1000 zix)");
+        break;
+      case 1:
+          text_layer_set_text(name2_layer, "Iron armor");
+          text_layer_set_text(description2_layer, "Give +4 Armure (2000 zix)");
+        break;
+      case 2:
+          text_layer_set_text(name2_layer, "Steel armor");
+          text_layer_set_text(description2_layer, "Give +6 Armure (4000 zix)");
+        break;
+      case 3:
+          text_layer_set_text(name2_layer, "Titanium armor");
+          text_layer_set_text(description2_layer, "Give +10 Armure (10 000 zix)");
+        break;
+      case 4:
+          text_layer_set_text(name2_layer, "Diamond armor");
+          text_layer_set_text(description2_layer, "Give +14 Armure (20 000 zix)");
+        break;
+      case 5:
+          text_layer_set_text(name2_layer, "Adamantium armor");
+          text_layer_set_text(description2_layer, "Give +25 Armure (100 000 zix)");
+        break;
+  //Weapon
+      case 6:
+          text_layer_set_text(name2_layer, "Wooden sword");
+          text_layer_set_text(description2_layer, "Give +2 Force (1000 zix)");
+        break;
+      case 7:
+          text_layer_set_text(name2_layer, "Iron sword");
+          text_layer_set_text(description2_layer, "Give +4 Force (2000 zix)");
+        break;
+      case 8:
+          text_layer_set_text(name2_layer, "Steel sword");
+          text_layer_set_text(description2_layer, "Give +6 Force (4000 zix)");
+        break;
+      case 9:
+          text_layer_set_text(name2_layer, "Diamond sword");
+          text_layer_set_text(description2_layer, "Give +14 Force (10 000 zix)");
+        break;
+      case 10:
+          text_layer_set_text(name2_layer, "Adamantium sword");
+          text_layer_set_text(description2_layer, "Give +25 Force (100 000 zix)");
+        break;
+      default:
+        text_layer_set_text(name2_layer, "Noting for sell");
+        text_layer_set_text(description2_layer, "");
+      break;
+      //Spell
+      switch (spell){
+        case 1:
+          text_layer_set_text(name3_layer, "Fire ball (20 mana)");
+          text_layer_set_text(description3_layer, "10 damages (1000 zix)");
+          break;
+        case 2:
+          text_layer_set_text(name3_layer, "Ice ball (20 mana)");
+          text_layer_set_text(description3_layer, "15 damages (5000 zix)");
+          break;
+        case 3:
+          text_layer_set_text(name3_layer, "Flash attack (20 mana)");
+          text_layer_set_text(description3_layer, "25 damages (8000 zix)");
+          break;
+        case 4:
+          text_layer_set_text(name3_layer, "Concentration (25 mana)");
+          text_layer_set_text(description3_layer, "30 damages (15 000 zix)");
+          break;
+        case 5:
+          text_layer_set_text(name3_layer, "Power ball (30 mana)");
+          text_layer_set_text(description3_layer, "50 damages (50 000 zix)");
+          break;
+        default:
+          text_layer_set_text(name3_layer, "Noting for sell");
+          text_layer_set_text(description3_layer, "");
+          break;
+      }
+    }
+}
+
+void show_shop(short int potion,short int armure, short int spell) {
   initialise_ui();
+  modif();
+  Object(potion, armure, spell);
   window_set_window_handlers(s_window, (WindowHandlers) {
     .unload = handle_window_unload,
   });
@@ -146,5 +292,7 @@ void show_shop(void) {
 }
 
 void hide_shop(void) {
+  persist_write_int(ZIX_PKEY, zix);
+  persist_write_int(RATE_PKEY, rate);
   window_stack_remove(s_window, true);
 }

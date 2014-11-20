@@ -8,28 +8,27 @@
 #define MANA_PKEY 220
 #define ARMURE_PKEY 218
   
-static int zix = 0;
-static int rate = 1;
-static int enmeyhealt = 0;
-static int enmeyforce = 0;
-static int enmeyarmure = 0;
-static int mehealt = 0;
-static int memana = 0;
-static int mearmure = 0;
-static char Thealt[6] = {"123456"};
-static char Tforce[6] = {"123456"};
-static char Tarmure[6] = {"123456"};
-static char Tmehealt[6] = {"123456"};
-static char Tmemana[6] = {"123456"};
+int zix = 0;
+int rate = 1;
+short int enmeyhealt = 0;
+short int enmeyforce = 0;  
+short int enmeyarmure = 0;
+short int mehealt = 0;
+short int memana = 0;
+short int mearmure = 0;
+char Thealt[6] = {"123456"};
+char Tforce[6] = {"123456"};
+char Tarmure[6] = {"123456"};
+char Tmehealt[6] = {"123456"};
+char Tmemana[6] = {"123456"};
 
-static int temp = 0;
-static bool test = true;
-static bool dead = false;
+short int temp = 0;
+bool test = true;
 
-static short int zixwin = 0;
-static short int ratewin = 0;
-static short int zixfall = 0;
-static short int ratefall = 0;
+short int zixwin = 0;
+short int ratewin = 0;
+short int zixfall = 0;
+short int ratefall = 0;
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;

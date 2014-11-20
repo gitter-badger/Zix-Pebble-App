@@ -4,8 +4,8 @@
 #define ZIX_PKEY 217
 #define RATE_PKEY 222
   
-static int zix;
-static int rate;
+int zix;
+int rate;
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;
@@ -251,6 +251,7 @@ void Object(short int potion,short int armure, short int spell) {
         text_layer_set_text(name2_layer, "Noting for sell");
         text_layer_set_text(description2_layer, "");
       break;
+  }
       //Spell
       switch (spell){
         case 1:
@@ -278,7 +279,6 @@ void Object(short int potion,short int armure, short int spell) {
           text_layer_set_text(description3_layer, "");
           break;
       }
-    }
 }
 
 void show_shop(short int potion,short int armure, short int spell) {

@@ -9,9 +9,9 @@
 #define ZIX_PKEY 217
 #define RATE_PKEY 222
   
-static int RandomNb = 0;
-static int zix = 0;
-static int rate = 1;
+short int RandomNb = 0;
+int zix = 0;
+int rate = 1;
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;

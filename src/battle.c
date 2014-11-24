@@ -7,28 +7,29 @@
 #define HEALT_PKEY 221
 #define MANA_PKEY 220
 #define ARMURE_PKEY 218
+#define FORCE_PKEY 219
   
-int zix = 0;
-int rate = 1;
-short int enmeyhealt = 0;
-short int enmeyforce = 0;  
-short int enmeyarmure = 0;
-short int mehealt = 0;
-short int memana = 0;
-short int mearmure = 0;
-char Thealt[6] = {"123456"};
-char Tforce[6] = {"123456"};
-char Tarmure[6] = {"123456"};
-char Tmehealt[6] = {"123456"};
-char Tmemana[6] = {"123456"};
+static int zix = 0;
+static int rate = 1;
+static int enmeyhealt = 0;
+static int enmeyforce;
+static int enmeyarmure = 0;
+static int mehealt = 0;
+static int memana = 0;
+static int mearmure = 0;
+static int meforce = 0;
+static char Thealt[6] = {"123456"};
+static char Tforce[6] = {"123456"};
+static char Tarmure[6] = {"123456"};
+static char Tmehealt[6] = {"123456"};
+static char Tmemana[6] = {"123456"};
 
-short int temp = 0;
-bool test = true;
+static bool test = true;
 
-short int zixwin = 0;
-short int ratewin = 0;
-short int zixfall = 0;
-short int ratefall = 0;
+static short int winzix;
+static short int failzix;
+static short int winrate;
+static short int failrate;
 
 // BEGIN AUTO-GENERATED UI CODE; DO NOT MODIFY
 static Window *s_window;
@@ -190,86 +191,6 @@ static void destroy_ui(void) {
   gbitmap_destroy(s_res_image_3);
 }
 // END AUTO-GENERATED UI CODE
-
-static void Fhealt(){
-      //Healt
-      snprintf(Thealt, sizeof(Thealt), "%d", enmeyhealt);
-      text_layer_set_text(var_health_enemie_layer, Thealt);
-}
-static void Ffroce(){
-    //Force
-      snprintf(Tforce, sizeof(Tforce), "%d", enmeyforce);
-      text_layer_set_text(var_force_enemy_layer, Tforce);
-}
-static void Farmure(){
-    //Armure
-      snprintf(Tarmure, sizeof(Tarmure), "%d", enmeyarmure);
-      text_layer_set_text(var_armure_enemy_layer, Tarmure);
-}
-static void Fmehealt(){
-    //mehealt
-      snprintf(Tmehealt, sizeof(Tmehealt), "%d", mehealt);
-      text_layer_set_text(var_health_me_layer, Tmehealt);
-}
-static void Fmemana(){
-    //Armure
-      snprintf(Tmemana, sizeof(Tmemana), "%d", memana);
-      text_layer_set_text(s_textlayer_1, Tmemana);
-}
-static void modif(int nb, short bonus){
-  if(test){
-  mehealt = persist_read_int(HEALT_PKEY);
-  memana = persist_read_int(MANA_PKEY);
-    if(nb == 0 ){
-        text_layer_set_text(enemy_layer, " Orgue ");
-        enmeyhealt = 50;
-        enmeyforce = 2;
-        enmeyarmure = 3;
-        temp = 0;
-      
-        zixwin = 500;
-        zixfall = 250;
-        ratefall = 5;
-        ratewin = 10;
-    }
-  if(nb == 1){
-    
-  }
-  if(nb == 2){
-    
-  }
-  if(nb == 3){
-    
-  }
-  if(nb == 4){
-    
-  }
-  if(nb == 5){
-    
-  }
-  if(nb == 6){
-    
-  }
-  if(nb == 7){
-    
-  }
-  if(nb == 8){
-    
-  }
-  if(nb == 9){
-    
-  }
-  if(nb == 10){
-    
-  }
-  }
-    Fhealt();
-    Ffroce();
-    Farmure();
-    Fmehealt();
-    Fmemana();
-    test = false;
-}
 static void var(){
     if(persist_exists(ZIX_PKEY)){
 	  zix = persist_read_int(ZIX_PKEY);
@@ -294,136 +215,123 @@ static void var(){
     if(persist_exists(ARMURE_PKEY)){
 	  mearmure = persist_read_int(ARMURE_PKEY);
     }else{
-	  mearmure = 5;
+	  mearmure = 0;
     }
+    if(persist_exists(FORCE_PKEY)){
+	  meforce = persist_read_int(FORCE_PKEY);
+    }else{
+	  meforce = 5;
+    }
+} 
+static void Fhealt(){
+      //Healt
+      snprintf(Thealt, sizeof(Thealt), "%d", enmeyhealt);
+      text_layer_set_text(var_health_enemie_layer, Thealt);
 }
+static void Ffroce(){
+    //Force
+      snprintf(Tforce, sizeof(Tforce), "%d", enmeyforce);
+      text_layer_set_text(var_force_enemy_layer, Tforce);
+}
+static void Farmure(){
+    //Armure
+      snprintf(Tarmure, sizeof(Tarmure), "%d", enmeyarmure);
+      text_layer_set_text(var_armure_enemy_layer, Tarmure);
+}
+static void Fmehealt(){
+    //mehealt
+      snprintf(Tmehealt, sizeof(Tmehealt), "%d", mehealt);
+      text_layer_set_text(var_health_me_layer, Tmehealt);
+}
+static void Fmemana(){
+    //memana
+      snprintf(Tmemana, sizeof(Tmemana), "%d", memana);
+      text_layer_set_text(s_textlayer_1, Tmemana);
+}
+static void modif(int nb, short bonus){
+  if(nb == 0 && test == true){
+      text_layer_set_text(enemy_layer, " Orgue ");
+      enmeyhealt = 50;
+      enmeyforce = 2;
+      enmeyarmure = 0;
+    
+      winzix = 300;
+      failzix = 150;
+      winrate = 10;
+      failrate = 5;
+  }
+  if(nb == 1 && test == true){
+    
+  }
+  if(nb == 2 && test == true){
+    
+  }
+  if(nb == 3 && test == true){
+    
+  }
+  if(nb == 4 && test == true){
+    
+  }
+  if(nb == 5 && test == true){
+    
+  }
+  if(nb == 6 && test == true){
+    
+  }
+  if(nb == 7 && test == true){
+    
+  }
+  if(nb == 8 && test == true){
+    
+  }
+  if(nb == 9 && test == true){
+    
+  }
+  if(nb == 10 && test == true){
+    
+  }
+    Fhealt();
+    Ffroce();
+    Farmure();
+    Fmehealt();
+    Fmemana();
+    test = false;
+}
+
 //Attaque
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-   switch (temp){
-    case 0 :
-        enmeyhealt -= 5-enmeyarmure;
-         mehealt -= 2;
-         if(mehealt <= 0){
-        zix -= zixfall;
-        rate -= ratefall;
-        hide_battle();
+        enmeyhealt = enmeyhealt - meforce;
+        mehealt = mehealt - enmeyforce;
+        Fhealt();
+        Fmehealt();
+        if(enmeyhealt <= 0){
+        zix += winzix;
+        rate += winrate;
+        persist_write_int(ZIX_PKEY, zix);
+        persist_write_int(RATE_PKEY, rate);
+        persist_write_int(HEALT_PKEY, mehealt);
+        persist_write_int(MANA_PKEY, memana);
+        test = true;
+        show_first();
         }
-      if(enmeyhealt <= 1){
-      zix += zixwin;
-     rate += ratewin;
-      hide_battle();
-       }
-      break;
-    case 1 :
-          
-      break;
-    case 2 :
-          
-      break;
-    case 3 :
-          
-      break;
-    case 4 :
-          
-      break;
-    case 5 :
-          
-      break;
-     case 6 :
-          
-      break;
-     case 7 :
-          
-      break;
-     case 8 :
-          
-      break;
-     case 9 :
-          
-      break;
-     case 10 :
-          
-      break;
-  }
-      Fmehealt();
-      Fhealt();
+        if(mehealt <= 0){
+        rate -= failrate;
+        zix -= failzix;
+        persist_write_int(ZIX_PKEY, zix);
+        persist_write_int(RATE_PKEY, rate);
+        persist_write_int(HEALT_PKEY, mehealt);
+        persist_write_int(MANA_PKEY, memana);
+        test = true;
+        show_first();
+        }
 }
+
 //Spell
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
-     switch (temp){
-    case 0 :
-       
-      break;
-    case 1 :
-          
-      break;
-    case 2 :
-          
-      break;
-    case 3 :
-          
-      break;
-    case 4 :
-          
-      break;
-    case 5 :
-          
-      break;
-     case 6 :
-          
-      break;
-     case 7 :
-          
-      break;
-     case 8 :
-          
-      break;
-     case 9 :
-          
-      break;
-     case 10 :
-          
-      break;
-  }
+  
 }
 //Inventory
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-   switch (temp){
-    case 0 :
-         enmeyhealt -= 5-enmeyarmure;
-         mehealt -= 2;
-      break;
-    case 1 :
-          
-      break;
-    case 2 :
-          
-      break;
-    case 3 :
-          
-      break;
-    case 4 :
-          
-      break;
-    case 5 :
-          
-      break;
-     case 6 :
-          
-      break;
-     case 7 :
-          
-      break;
-     case 8 :
-          
-      break;
-     case 9 :
-          
-      break;
-     case 10 :
-          
-      break;
-  }
 }
 static void click_config_provider(void *context) {
   window_single_click_subscribe(BUTTON_ID_SELECT, select_click_handler);
@@ -436,12 +344,12 @@ static void handle_window_unload(Window* window) {
   persist_write_int(RATE_PKEY, rate);
   persist_write_int(HEALT_PKEY, mehealt);
   persist_write_int(MANA_PKEY, memana);
-  persist_write_int(ARMURE_PKEY, mearmure);
+  test = true;
 }
 void show_battle(int nb, short bonus) {
   initialise_ui();
-  modif(nb, bonus);
   var();
+  modif(nb, bonus);
   window_set_click_config_provider(s_window, click_config_provider);
   window_set_window_handlers(s_window, (WindowHandlers) {
     .unload = handle_window_unload,
@@ -450,10 +358,10 @@ void show_battle(int nb, short bonus) {
 }
 
 void hide_battle(void) {
-  destroy_ui();
   persist_write_int(ZIX_PKEY, zix);
   persist_write_int(RATE_PKEY, rate);
   persist_write_int(HEALT_PKEY, mehealt);
   persist_write_int(MANA_PKEY, memana);
+  test = true;
   window_stack_remove(s_window, true);
 }

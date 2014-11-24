@@ -9,22 +9,19 @@
 #define MANA_PKEY 220
 #define FORCE_PKEY 219
 #define ARMURE_PKEY 218
-#define SPELL_PKEY 223
-#define WEAPON_PKEY 224
-#define POTION_PKEY 225
   
-int zix = 0;
-int rate = 1;
-short int healt = 100;
-short int mana = 100;
-short int force = 5;
-short int armure = 0;
-char Tzix[6] = {"123456"};
-char Trate[6] = {"123456"};
-char Thealt[6] = {"123456"};
-char Tmana[6] = {"123456"};
-char Tforce[6] = {"123456"};
-char Tarmure[6] = {"123456"};
+static int zix = 0;
+static int rate = 1;
+static short int healt = 100;
+static short int mana = 100;
+static short int force = 5;
+static short int armure = 0;
+static char Tzix[6] = {"123456"};
+static char Trate[6] = {"123456"};
+static char Thealt[6] = {"123456"};
+static char Tmana[6] = {"123456"};
+static char Tforce[6] = {"123456"};
+static char Tarmure[6] = {"123456"};
 
 
 #include <pebble.h>
@@ -219,7 +216,7 @@ static void modif(){
     if(persist_exists(HEALT_PKEY)){
 	  healt = persist_read_int(HEALT_PKEY);
     }else{
-	  healt = 100;
+	  healt = 9999;
     }
     if(persist_exists(MANA_PKEY)){
 	  mana = persist_read_int(MANA_PKEY);
@@ -234,22 +231,34 @@ static void modif(){
     if(persist_exists(ARMURE_PKEY)){
 	  armure = persist_read_int(ARMURE_PKEY);
     }else{
-	  armure = 5;
+	  armure = 0;
     }
 }
 
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  short int x = rand()%7;
-  short int y = rand()%10;
+  short int x = rand()%10;
+  short int y = rand()%13;
   short int w = rand()%5;
+  persist_write_int(ZIX_PKEY, zix);
+  persist_write_int(RATE_PKEY, rate);
+  persist_write_int(HEALT_PKEY, healt);
+  persist_write_int(MANA_PKEY, mana);
+  persist_write_int(FORCE_PKEY, force);
   show_shop(x, y, w);
 }
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
+  persist_write_int(ZIX_PKEY, zix);
   show_inventory();
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
+  persist_write_int(ZIX_PKEY, zix);
+  persist_write_int(RATE_PKEY, rate);
+  persist_write_int(HEALT_PKEY, healt);
+  persist_write_int(MANA_PKEY, mana);
+  persist_write_int(FORCE_PKEY, force);
+  persist_write_int(ARMURE_PKEY, armure);
   show_quest();
 }
 
@@ -261,6 +270,12 @@ static void click_config_provider(void *context) {
 
 static void handle_window_unload(Window* window) {
   destroy_ui();
+  persist_write_int(ZIX_PKEY, zix);
+  persist_write_int(RATE_PKEY, rate);
+  persist_write_int(HEALT_PKEY, healt);
+  persist_write_int(MANA_PKEY, mana);
+  persist_write_int(FORCE_PKEY, force);
+  persist_write_int(ARMURE_PKEY, armure);
 }
 
 static void changevalue(){
@@ -271,9 +286,9 @@ static void changevalue(){
   Farmure();
 }
 void show_first(void) {
+  modif();
   srand(time(NULL));
   initialise_ui();
-  modif();
   changevalue();
   window_set_click_config_provider(s_window, click_config_provider);
   window_set_window_handlers(s_window, (WindowHandlers) {
@@ -284,6 +299,5 @@ void show_first(void) {
 }
 
 void hide_first(void) {
-  window_destroy(s_window);
   window_stack_remove(s_window, true);
 }

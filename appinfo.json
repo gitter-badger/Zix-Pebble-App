@@ -9,6 +9,11 @@
     "resources": {
         "media": [
             {
+                "file": "images/shop.png",
+                "name": "IMAGE_SHOP",
+                "type": "png"
+            },
+            {
                 "file": "images/2.png",
                 "name": "IMAGE_2",
                 "type": "png"
@@ -34,11 +39,6 @@
                 "type": "png"
             },
             {
-                "file": "images/sword.png",
-                "name": "IMAGE_SWORD",
-                "type": "png"
-            },
-            {
                 "file": "images/Knight copie.png",
                 "name": "IMAGE_KNIGHT",
                 "type": "png"
@@ -46,12 +46,6 @@
             {
                 "file": "images/inventory.png",
                 "name": "IMAGE_INVENTORY",
-                "type": "png"
-            },
-            {
-                "file": "images/shop.png",
-                "menuIcon": true,
-                "name": "IMAGE_SHOP",
                 "type": "png"
             },
             {

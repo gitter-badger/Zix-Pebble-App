@@ -254,41 +254,78 @@ static void modif(int nb, short bonus){
       enmeyhealt = 50;
       enmeyforce = 2;
       enmeyarmure = 0;
-    
-      winzix = 300;
-      failzix = 150;
+    if(bonus){
+      winzix = 200;
+      failzix = 75;
       winrate = 10;
       failrate = 5;
-  }
-  if(nb == 1 && test == true){
-    
-  }
-  if(nb == 2 && test == true){
-    
+    }
+    else{
+      winzix = 150;
+      failzix = 75;
+      winrate = 10;
+      failrate = 5;
+    }
   }
   if(nb == 3 && test == true){
-    
+    text_layer_set_text(enemy_layer, "Groupe de Voleur");
+    enmeyhealt = 200;
+    enmeyforce = 7;
+    enmeyarmure = 2;
+    winzix = 500;
+    failzix = 350;
+    winrate = 25;
+    failrate = 10;
   }
   if(nb == 4 && test == true){
-    
+    text_layer_set_text(enemy_layer, "Dragon");
+    enmeyhealt = 350;
+    enmeyforce = 10;
+    enmeyarmure = 5;
+    winzix = 3000;
+    failzix = 1500;
+    winrate = 100;
+    failrate = 25;
   }
   if(nb == 5 && test == true){
-    
-  }
-  if(nb == 6 && test == true){
-    
+    text_layer_set_text(enemy_layer, "Bandit");
+    enmeyhealt = 35;
+    enmeyforce = 1;
+    enmeyarmure = 0;
+    winzix = 100;
+    failzix = 50;
+    winrate = 0;
+    failrate = 2;
   }
   if(nb == 7 && test == true){
-    
-  }
-  if(nb == 8 && test == true){
-    
+    text_layer_set_text(enemy_layer, "Assassin");
+    enmeyhealt = 75;
+    enmeyforce = 3;
+    enmeyarmure = 1;
+    winzix = 250;
+    failzix = 100;
+    winrate = 10;
+    failrate = 2;
   }
   if(nb == 9 && test == true){
-    
+    text_layer_set_text(enemy_layer, "Groupe de Soldat");
+    enmeyhealt = 1000;
+    enmeyforce = 25;
+    enmeyarmure = 10;
+    winzix = 5000;
+    failzix = 2500;
+    winrate = 200;
+    failrate = 100;
   }
   if(nb == 10 && test == true){
-    
+    text_layer_set_text(enemy_layer, "Troll");
+    enmeyhealt = 150;
+    enmeyforce = 5;
+    enmeyarmure = 2;
+    winzix = 500;
+    failzix = 250;
+    winrate = 50;
+    failrate = 25;
   }
     Fhealt();
     Ffroce();
@@ -300,10 +337,12 @@ static void modif(int nb, short bonus){
 
 //Attaque
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-        enmeyhealt = enmeyhealt - meforce;
-        mehealt = mehealt - enmeyforce;
-        Fhealt();
-        Fmehealt();
+        if(enmeyarmure > meforce) mehealt = (mehealt - (enmeyforce-mearmure));
+        else if(mearmure >enmeyforce) enmeyhealt = (enmeyhealt - (meforce-enmeyarmure));
+        else{
+        enmeyhealt = (enmeyhealt - (meforce-enmeyarmure));
+        mehealt = (mehealt - (enmeyforce-mearmure));
+        }
         if(enmeyhealt <= 0){
         zix += winzix;
         rate += winrate;
@@ -312,6 +351,7 @@ static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
         persist_write_int(HEALT_PKEY, mehealt);
         persist_write_int(MANA_PKEY, memana);
         test = true;
+        window_stack_remove(s_window, true);
         show_first();
         }
         if(mehealt <= 0){
@@ -322,8 +362,11 @@ static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
         persist_write_int(HEALT_PKEY, mehealt);
         persist_write_int(MANA_PKEY, memana);
         test = true;
+        window_stack_remove(s_window, true);
         show_first();
         }
+  Fhealt();
+  Fmehealt();
 }
 
 //Spell
